@@ -1,21 +1,19 @@
-const express = require('express');
 const cors = require('cors')
-const dotenv = require("dotenv")
-dotenv.config();
-
-if(!process.env.PORT){
-    console.log("Failed to accesss port")
-    process.exit(1)
-}
-
+const express = require('express');
 const app = express();
-const port = process.env.PORT
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
-app.use(cors());
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
 
-app.listen(process.env.PORT, ()=>{
-    console.log("Starting server on port " + port)
-})
-
-app.listen()
+server.listen(8080, () => {
+  console.log('listening on *:3000');
+});
