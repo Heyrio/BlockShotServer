@@ -32,13 +32,21 @@
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         if (input.value) {
-          socket.emit('send_msg', input.value);
+          const msg = {
+            content:input.value,
+            senderId: 102,
+            userId: 101,
+            date: new Date(),
+
+          }
+          socket.emit('send_msg', msg);
           input.value = '';
         }
       });
 
       socket.on('send_msg', function(msg) {
         var item = document.createElement('li');
+        console.log(msg, "from idx")
         item.textContent = msg;
         messages.appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);

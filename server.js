@@ -10,8 +10,9 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
  console.log("A user connected!")
   socket.on('send_msg', msg => {
-    console.log(msg)
-    io.emit('send_msg', msg.content);
+    const {content} = msg
+    console.log(msg, "from server.js")
+    io.emit('send_msg', content);
   });
 
   socket.on('disconnect', () => {
