@@ -9,10 +9,9 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
  console.log("A user connected!")
-  socket.on('message', msg => {
-    console.log("does this hapop")
+  socket.on('send_msg', msg => {
     console.log(msg)
-    io.emit('message', msg);
+    io.emit('send_msg', msg.content);
   });
 
   socket.on('disconnect', () => {
