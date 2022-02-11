@@ -46,8 +46,8 @@
 
       socket.on('send_msg', function(msg) {
         var item = document.createElement('li');
-        console.log(msg, "from idx")
-        item.textContent = msg;
+        const {content} = msg
+        item.textContent = content;
         messages.appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);
       });
