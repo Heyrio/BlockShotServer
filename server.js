@@ -9,10 +9,33 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
  console.log("A user connected!")
-  socket.on('chat message', msg => {
-    io.emit('chat message', msg);
+  socket.on('message', msg => {
+    console.log("does this hapop")
+    console.log(msg)
+    io.emit('message', msg);
   });
+
+  socket.on('disconnect', () => {
+    console.log("A user disconnected!")
+		// remove the username from global usernames list
+		// delete usernames[socket.username];
+		// echo globally that this client has left
+		//socket.broadcast.emit('updatechat', 'Chat Bot', `${socket.username} has left chat`);
+	});
+
+  socket.on('friend_req', (to_user, from_user, msg) => {
+		//emits 'msg_user_handle', this updates the chat body on client-side
+		// io.to(usernames[to_user]).emit('msg_user_handle', from_user, msg);
+		//write the chat message to a txt file		
+		// const wstream = fs.createWriteStream('chat_data.txt');		
+		// wstream.write(msg);
+		// wstream.write('\r\n');
+		// wstream.end();
+		
+	});
+
 });
+
 
 http.listen(port, () => {
   console.log(`Socket.IO server running at http://localhost:${port}/`);
